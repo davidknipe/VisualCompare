@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>VisualCompareMode</id>
+    <title>Visual red/green comparison mode for Episerver</title>
+    <version>1.0.0</version>
+    <authors>David Knipe</authors>
+    <owners>David Knipe</owners>
+    <licenseUrl>https://github.com/davidknipe/VisualCompareMode/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://www.david-tec.com/2018/03/visual-compare-option-available-for-episerver-11/</projectUrl>
+    <iconUrl>https://www.david-tec.com/global/media/visualcomparemode/visualcompareicon.png?v=1.0.0</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Add a visual comparison for content</description>
+    <releaseNotes>Initial release for Episerver 11</releaseNotes>
+    <tags>Episerver CMS</tags>
+    <dependencies>
+      <dependency id="EPiServer.CMS.UI.Core" version="[11.0, 12.0)" />
+      <dependency id="htmldiff.net" version="1.3" />
+    </dependencies>
+  </metadata>
+</package>
