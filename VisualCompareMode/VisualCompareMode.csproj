@@ -178,6 +178,7 @@
     <Content Include="modules\_protected\VisualCompareMode\ClientResources\Styles\DiffStyles.css" />
     <Content Include="modules\_protected\VisualCompareMode\EpiserverOverridenLibs\CustomCompareCommandProvider.js" />
     <Content Include="modules\_protected\VisualCompareMode\EpiserverOverridenLibs\customWidgetSwitcher.js" />
+    <None Include="web.config.transform" />
     <None Include="app.config" />
     <Content Include="modules\_protected\VisualCompareMode\module.config">
       <SubType>Designer</SubType>

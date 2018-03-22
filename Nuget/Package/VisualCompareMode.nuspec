@@ -3,7 +3,7 @@
   <metadata>
     <id>VisualCompareMode</id>
     <title>Visual red/green comparison mode for Episerver</title>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>David Knipe</authors>
     <owners>David Knipe</owners>
     <licenseUrl>https://github.com/davidknipe/VisualCompareMode/blob/master/LICENSE</licenseUrl>
@@ -11,7 +11,7 @@
     <iconUrl>https://www.david-tec.com/global/media/visualcomparemode/visualcompareicon.png?v=1.0.0</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Add a visual comparison for content</description>
-    <releaseNotes>Initial release for Episerver 11</releaseNotes>
+    <releaseNotes>Add a setting to web.config to ensure the module is disovered automatically on initialisation</releaseNotes>
     <tags>Episerver CMS</tags>
     <dependencies>
       <dependency id="EPiServer.CMS.UI.Core" version="[11.0, 12.0)" />
