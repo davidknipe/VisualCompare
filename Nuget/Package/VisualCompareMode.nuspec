@@ -3,7 +3,7 @@
   <metadata>
     <id>VisualCompareMode</id>
     <title>Visual red/green comparison mode for Episerver</title>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <authors>David Knipe</authors>
     <owners>David Knipe</owners>
     <licenseUrl>https://github.com/davidknipe/VisualCompareMode/blob/master/LICENSE</licenseUrl>
@@ -11,7 +11,7 @@
     <iconUrl>https://www.david-tec.com/global/media/visualcomparemode/visualcompareicon.png?v=1.0.0</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Add a visual comparison for content</description>
-    <releaseNotes>v1.0.2 remove unnecessary folder from Nuget package</releaseNotes>
+    <releaseNotes>v1.0.3 fixed an issue in the Nuget package that caused duplicate &lt;protectedModules&gt; elements in web.config</releaseNotes>
     <tags>Episerver CMS</tags>
     <dependencies>
       <dependency id="EPiServer.CMS.UI.Core" version="[11.0, 12.0)" />

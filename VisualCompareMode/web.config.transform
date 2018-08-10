@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <episerver.shell>
-    <protectedModules rootPath="~/EPiServer/">
+    <protectedModules>
       <add name="VisualCompareMode" />
     </protectedModules>
   </episerver.shell>
