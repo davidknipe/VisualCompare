@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using EPiServer.Globalization;
 using EPiServer.Logging;
@@ -42,8 +44,11 @@ namespace VisualCompareMode.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public string Index(string version1, string version2)
+        public string Index(string version1, string version2, string originalcontenttype)
         {
+            version1 = HttpUtility.UrlDecode(Encoding.UTF8.GetString(Convert.FromBase64String(version1)));
+            version2 = HttpUtility.UrlDecode(Encoding.UTF8.GetString(Convert.FromBase64String(version2)));
+
             HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(version1, version2);
             var diffResult = diffHelper.Build();
             string cssLink =
