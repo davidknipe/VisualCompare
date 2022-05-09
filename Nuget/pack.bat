@@ -4,7 +4,7 @@ del /Q Package\tools\*.*
 del /Q Package\content\*.*
 
 @Echo Copying new files
-xcopy ..\VisualCompareMode\bin\Release\VisualCompareMode.dll Package\lib\net45
+xcopy ..\VisualCompareMode\bin\Release\net461\VisualCompareMode.dll Package\lib\net45
 xcopy ..\VisualCompareMode\modules\_protected\VisualCompareMode\*.*  Package\content\modules\_protected\VisualCompareMode\ /S /Y
 xcopy ..\VisualCompareMode\web.config.transform Package\content
 
