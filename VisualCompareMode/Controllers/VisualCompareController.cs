@@ -1,22 +1,26 @@
 using System;
 using System.Text;
 using System.Web;
-using System.Web.Mvc;
 using EPiServer.Globalization;
 using EPiServer.Logging;
-using VisualCompareMode.Interfaces;
 using VisualCompareMode.Models;
+using EPiServer.Shell;
+using EPiServer;
+
+#if NET
+using Microsoft.AspNetCore.Mvc;
+#else
+using System.Web.Mvc;
+#endif
 
 namespace VisualCompareMode.Controllers
 {
     public class VisualCompareController : Controller
     {
-        private readonly IEpiserverUiUrlHelper _episerverUiUrlHelper;
         private static readonly ILogger Logger = LogManager.GetLogger();
 
-        public VisualCompareController(IEpiserverUiUrlHelper episerverUiUrlHelper)
+        public VisualCompareController()
         {
-            _episerverUiUrlHelper = episerverUiUrlHelper;
         }
 
         public ActionResult Index()
@@ -35,15 +39,22 @@ namespace VisualCompareMode.Controllers
 
         private GetDiffBootstrapperModel GetDiffModel()
         {
+#if NET
+            var fallbackCulture = ContentLanguage.PreferredCulture;
+#else
+            var fallbackCulture = ContentLanguage.Instance?.FinalFallbackCulture;
+#endif
             return new GetDiffBootstrapperModel()
             {
-                EpiserverUiUrl  = _episerverUiUrlHelper.GetCmsSegments(),
-                FallbackLanguage = ContentLanguage.Instance?.FinalFallbackCulture.TwoLetterISOLanguageName
+                EpiserverUiUrl  = UriSupport.UIUrl.OriginalString,
+                FallbackLanguage = fallbackCulture?.TwoLetterISOLanguageName
             };
         }
 
         [HttpPost]
+#if NETFRAMEWORK
         [ValidateInput(false)]
+#endif
         public string Index(string version1, string version2, string originalcontenttype)
         {
             version1 = HttpUtility.UrlDecode(Encoding.UTF8.GetString(Convert.FromBase64String(version1)));
@@ -51,8 +62,9 @@ namespace VisualCompareMode.Controllers
 
             HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(version1, version2);
             var diffResult = diffHelper.Build();
+            string cssPath = Paths.ToClientResource("visualcomparemode", "Styles/DiffStyles.css");
             string cssLink =
-                $"<link href=\"/{_episerverUiUrlHelper.GetEpiserverSegment()}/VisualCompareMode/ClientResources/Styles/DiffStyles.css\" media=\"all\" rel=\"stylesheet\" />";
+                $"<link href=\"{cssPath}\" media=\"all\" rel=\"stylesheet\" />";
             diffResult = diffResult.Replace("</head>", cssLink + "</head>");
             diffResult = diffResult.Replace("<del class='diffmod'><img",
                 "<del class='diffmod diff-image-deleted'><img");
