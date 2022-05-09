@@ -3,7 +3,7 @@
   <metadata>
     <id>VisualCompareMode</id>
     <title>Visual red/green comparison mode for Episerver</title>
-    <version>1.0.6</version>
+    <version>1.0.7-alpha1</version>
     <authors>David Knipe</authors>
     <owners>David Knipe</owners>
     <licenseUrl>https://github.com/davidknipe/VisualCompareMode/blob/master/LICENSE</licenseUrl>
