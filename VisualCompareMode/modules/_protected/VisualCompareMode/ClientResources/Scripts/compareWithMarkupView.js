@@ -4,7 +4,8 @@ define([
     "dojo/topic",
     "epi/shell/widget/Iframe",
     "epi-cms/compare/views/SideBySideCompareView",
-    "epi/shell/_ContextMixin"
+    "epi/shell/_ContextMixin",
+    "epi/routes"
 ],
 
 function (
@@ -13,7 +14,8 @@ function (
     topic,
     Iframe,
     SideBySideCompareView,
-    _ContextMixin
+    _ContextMixin,
+    routes
 ) {
 
     return declare([SideBySideCompareView, _ContextMixin], {
@@ -48,11 +50,7 @@ function (
         },
 
         _getDiffUrl: function () {
-            var getDiffUrl = this._currentContext.fullHomeUrl + "VisualCompare/";
-
-            // Ensure the protocol is correct when viewing blocks
-            getDiffUrl = getDiffUrl.split("://")[1];
-            getDiffUrl = window.location.href.split("://")[0] + "://" + getDiffUrl;
+            var getDiffUrl = routes.getActionPath({ moduleArea: "VisualCompareMode", controller: "VisualCompare"});
 
             return getDiffUrl;
         },
