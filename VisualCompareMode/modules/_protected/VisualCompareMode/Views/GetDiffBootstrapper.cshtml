@@ -130,6 +130,7 @@
         }
 
         var rootUrl = "@Model.EpiserverUiUrl/";
+        var compareUrl = "@Url.Action("Index", "VisualCompare")";
         var fallbackLang = "/@Model.FallbackLanguage/";
     var $ = window.jQuery;
 
@@ -184,7 +185,7 @@
 
             } else {
                 var postData = "version1=" + window.btoa(encodeURIComponent(data)) + "&version2=" + window.btoa(encodeURIComponent(data2)) + "&originalcontenttype=" + encodeURIComponent(originalContentType);
-                $.post(rootUrl + "VisualCompare/",
+                $.post(compareUrl,
                     postData,
                     function(data3) {
                         console.log("VisualCompare: Showing diff version");
