@@ -46,7 +46,7 @@ namespace VisualCompareMode.Controllers
 #endif
             return new GetDiffBootstrapperModel()
             {
-                EpiserverUiUrl  = UriSupport.UIUrl.OriginalString,
+                EpiserverUiUrl  = UriSupport.UIUrl.AbsolutePath,
                 FallbackLanguage = fallbackCulture?.TwoLetterISOLanguageName
             };
         }
