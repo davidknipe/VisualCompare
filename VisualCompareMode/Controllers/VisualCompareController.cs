@@ -1,11 +1,12 @@
 using System;
 using System.Text;
 using System.Web;
-using EPiServer.Globalization;
 using EPiServer.Logging;
 using VisualCompareMode.Models;
 using EPiServer.Shell;
-using EPiServer;
+using EPiServer.Web.Routing;
+using EPiServer.Core;
+using EPiServer.Web;
 
 #if NET
 using Microsoft.AspNetCore.Mvc;
@@ -17,38 +18,32 @@ namespace VisualCompareMode.Controllers
 {
     public class VisualCompareController : Controller
     {
+        private readonly UrlResolver _urlResolver;
         private static readonly ILogger Logger = LogManager.GetLogger();
 
-        public VisualCompareController()
+        public VisualCompareController(UrlResolver urlResolver)
         {
+            _urlResolver = urlResolver;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(ContentReference first, string firstlang, ContentReference second, string secondlang)
         {
             try
             {
-                return PartialView("~/modules/_protected/VisualCompareMode/Views/GetDiffBootstrapper.cshtml",
-                    GetDiffModel());
+                var virtualPathArguments = new VirtualPathArguments { ContextMode = ContextMode.Preview };
+                var model = new GetDiffBootstrapperModel()
+                {
+                    FirstUrl = _urlResolver.GetUrl(first, firstlang, virtualPathArguments),
+                    SecondUrl = _urlResolver.GetUrl(second, secondlang, virtualPathArguments),
+                    CompareUrl = Url.Action("Index", "VisualCompare"),
+                };
+                return PartialView("~/modules/_protected/VisualCompareMode/Views/GetDiffBootstrapper.cshtml", model);
             }
             catch (Exception ex)
             {
                 Logger.Error("Exception in VisualCompareController", ex);
                 return PartialView(null);
             }
-        }
-
-        private GetDiffBootstrapperModel GetDiffModel()
-        {
-#if NET
-            var fallbackCulture = ContentLanguage.PreferredCulture;
-#else
-            var fallbackCulture = ContentLanguage.Instance?.FinalFallbackCulture;
-#endif
-            return new GetDiffBootstrapperModel()
-            {
-                EpiserverUiUrl = UriSupport.UIUrl.AbsolutePath.TrimEnd('/'),
-                FallbackLanguage = fallbackCulture?.TwoLetterISOLanguageName
-            };
         }
 
         [HttpPost]
