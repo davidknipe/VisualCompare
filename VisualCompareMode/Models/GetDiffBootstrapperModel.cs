@@ -2,7 +2,8 @@
 {
     public class GetDiffBootstrapperModel
     {
-        public string EpiserverUiUrl { get; set; }
-        public string FallbackLanguage { get; internal set; }
+        public string FirstUrl { get; internal set; }
+        public string SecondUrl { get; internal set; }
+        public string CompareUrl { get; internal set; }
     }
 }

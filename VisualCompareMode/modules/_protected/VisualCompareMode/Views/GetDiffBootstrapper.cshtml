@@ -116,47 +116,20 @@
 
     <script>
 
-    $(document).ready(function() {
-
-        function getUrlVars() {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for (var i = 0; i < hashes.length; i++) {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        }
-
-        var rootUrl = "@Model.EpiserverUiUrl/";
-        var compareUrl = "@Url.Action("Index", "VisualCompare")";
-        var fallbackLang = "/@Model.FallbackLanguage/";
+$(document).ready(function() {
+    var firstUrl = "@Model.FirstUrl";
+    var secondUrl = "@Model.SecondUrl";
+    var compareUrl = "@Model.CompareUrl";
     var $ = window.jQuery;
 
     var contentLength1 = 0;
     var contentLength2 = 0;
 
-    var firstLang = getUrlVars()["firstlang"];
-    var secondLang = getUrlVars()["secondlang"];
-
     $(".binary-files-differ").hide();
 
-    if (firstLang == "") {
-        firstLang = fallbackLang;
-    }
-
-    if (secondLang == "") {
-        secondLang = fallbackLang;
-    }
 
     $.ajax({
-        url: rootUrl +
-            "Content/" +
-            secondLang +
-            "/,," +
-            getUrlVars()["second"] +
-            "/?epieditmode=False",
+        url: secondUrl,
         context: document.body
     }).done(function (data, textStatus, request) {
         console.log("VisualCompare: Got first set of content");
@@ -166,12 +139,7 @@
         }
 
         $.ajax({
-            url: rootUrl +
-                "Content/" +
-                firstLang +
-                "/,," +
-                getUrlVars()["first"] +
-                "/?epieditmode=False",
+            url: firstUrl,
             context: document.body
         }).done(function (data2, textStatus, request) {
             console.log("VisualCompare: Got second set of content");
