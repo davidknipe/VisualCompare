@@ -9,7 +9,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Visual red/green comparison mode for Episerver</Title>
-    <Version>1.0.8-beta5</Version>
+    <Version>1.0.8-beta8</Version>
     <Copyright>Copyright © 2022</Copyright>
     <Authors>David Knipe</Authors>
     <Description>Add a visual comparison for content</Description>
@@ -22,9 +22,13 @@
     <PackageIconUrl>https://www.david-tec.com/global/media/visualcomparemode/visualcompareicon.png?v=1.0.0</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="modules\**\*" Exclude="modules\**\Web.config">
+      <Pack>true</Pack>
+      <PackagePath>contentFiles\any\any\modules</PackagePath>
+    </Content>
     <Content Include="modules\**\*">
       <Pack>true</Pack>
-      <PackagePath>content\modules;contentFiles\any\any\modules</PackagePath>
+      <PackagePath>content\modules</PackagePath>
     </Content>
     <Content Include="VisualCompareMode.targets">
       <Pack>true</Pack>
