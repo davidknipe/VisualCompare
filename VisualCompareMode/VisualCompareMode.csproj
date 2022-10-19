@@ -25,6 +25,8 @@
     <Content Include="modules\**\*" Exclude="modules\**\Web.config">
       <Pack>true</Pack>
       <PackagePath>contentFiles\any\any\modules</PackagePath>
+      <BuildAction>None</BuildAction>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="modules\**\*">
       <Pack>true</Pack>
