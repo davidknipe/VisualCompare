@@ -18,7 +18,8 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/davidknipe/VisualCompare</RepositoryUrl>
     <PackageReleaseNotes>Update for CMS 12 compatibility</PackageReleaseNotes>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageIconUrl>https://www.david-tec.com/global/media/visualcomparemode/visualcompareicon.png?v=1.0.0</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
@@ -40,7 +41,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\LICENSE">
+    <None Include="..\LICENSE.txt">
         <Pack>True</Pack>
         <PackagePath>\</PackagePath>
     </None>
