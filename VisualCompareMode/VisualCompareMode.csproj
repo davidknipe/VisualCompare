@@ -9,9 +9,9 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Visual red/green comparison mode for Episerver</Title>
-    <Version>1.0.8-pre001</Version>
-    <Copyright>Copyright © 2023</Copyright>
-    <Authors>David Knipe</Authors>
+    <Version>1.1.0</Version>
+    <Copyright>Copyright © 2024</Copyright>
+    <Authors>David Knipe, Matthew Jimenez</Authors>
     <Description>Add a visual comparison for content</Description>
     <PackageProjectUrl>http://www.david-tec.com/2018/03/visual-compare-option-available-for-episerver-11/</PackageProjectUrl>
     <PackageTags>Episerver CMS</PackageTags>
