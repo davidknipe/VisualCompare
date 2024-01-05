@@ -12,10 +12,10 @@ See more information here: https://www.david-tec.com/2018/03/visual-compare-opti
 Install the package directly from the Optimizely Nuget repository.
 
 ``` 
-dotnet add package UNRVLD.ODP.VisitorGroups
+dotnet add package VisualCompareMode
 ```
 ```
-Install-Package UNRVLD.ODP.VisitorGroups
+Install-Package VisualCompareMode
 ```
 
 ## Configuration (.NET 5.0/6.0/7.0/8.0)
