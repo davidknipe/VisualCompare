@@ -3,10 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-
     <style>
         html {
             height: 100vh;
@@ -46,27 +42,27 @@
             margin-right: auto;
         }
 
-            .lds-rolling div,
-            .lds-rolling div:after {
-                position: absolute;
-                width: 100px;
-                height: 100px;
-                border: 20px solid #1ba4fa;
-                border-top-color: transparent;
-                border-radius: 50%;
-            }
+        .lds-rolling div,
+        .lds-rolling div:after {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 20px solid #1ba4fa;
+            border-top-color: transparent;
+            border-radius: 50%;
+        }
 
-            .lds-rolling div {
-                -webkit-animation: lds-rolling 1s linear infinite;
-                animation: lds-rolling 1s linear infinite;
-                top: 100px;
-                left: 100px;
-            }
+        .lds-rolling div {
+            -webkit-animation: lds-rolling 1s linear infinite;
+            animation: lds-rolling 1s linear infinite;
+            top: 100px;
+            left: 100px;
+        }
 
-                .lds-rolling div:after {
-                    -webkit-transform: rotate(90deg);
-                    transform: rotate(90deg);
-                }
+        .lds-rolling div:after {
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
 
         .lds-rolling {
             width: 200px !important;
@@ -85,7 +81,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            /*background-color: rgba(0,0,0,0.5); /* Black background with opacity */ */ z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+            /*background-color: rgba(0,0,0,0.5); /* Black background with opacity */ */
+            z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
             cursor: pointer; /* Add a pointer on hover */
         }
 
@@ -95,7 +92,7 @@
             font-size: 13px;
         }
 
-        .binary-files-differ {
+        #info-message {
             align-content: center;
             text-align: center;
             vertical-align: central;
@@ -110,61 +107,85 @@
         </div>
     </div>
 
-    <div class="epi-spinnerOverlay binary-files-differ">
+    <div class="epi-spinnerOverlay" id="info-message" style="display: none">
         Files are different
     </div>
 
     <script>
-
-$(document).ready(function() {
     var firstUrl = "@Model.FirstUrl";
     var secondUrl = "@Model.SecondUrl";
     var compareUrl = "@Model.CompareUrl";
-    var $ = window.jQuery;
 
-    var contentLength1 = 0;
-    var contentLength2 = 0;
+    function showMessage(text) {
+        var el = document.getElementById("info-message");
+        el.textContent = text;
 
-    $(".binary-files-differ").hide();
+        document.getElementById("draftThumbnail-spinner").style.display = 'none';
+        el.style.display = 'block';
+    }
 
+    function compare(content1, content2, originalContentType) {
+        var request = new XMLHttpRequest();
+        request.open("POST", compareUrl, true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.onload = function () {
+            if (request.status == 200) {
+                console.log("VisualCompare: Showing diff version");
+                document.write(request.response);
+            }
+            else {
+                showMessage("VisualCompare failed to load: " + request.status);
+                console.error(request.response);
+            }
+        };
 
-    $.ajax({
-        url: secondUrl,
-        context: document.body
-    }).done(function (data, textStatus, request) {
+        var postData = "version1=" + encodeURIComponent(window.btoa(content1)) +
+            "&version2=" + encodeURIComponent(window.btoa(content2)) +
+            "&originalcontenttype=" + encodeURIComponent(originalContentType);
+        request.send(postData);
+    }
+
+    function loadContent(url, callback) {
+        var request = new XMLHttpRequest();
+        request.open("GET", url, true);
+        request.onload = function () {
+            if (request.status == 200) {
+                callback(request);
+            }
+            else {
+                showMessage("VisualCompare failed to load: " + request.status);
+                console.error(request.response);
+            }
+        }
+        request.send();
+    }
+
+    loadContent(secondUrl, function (request) {
         console.log("VisualCompare: Got first set of content");
+        var originalContentType = request.getResponseHeader('content-type');
+        var content1 = request.response;
+        var contentLength1 = 0;
         if (request.getResponseHeader('content-type').match("text/html") == null) {
             // Do something to check if binary files differ
             contentLength1 = request.getResponseHeader('content-length');
         }
 
-        $.ajax({
-            url: firstUrl,
-            context: document.body
-        }).done(function (data2, textStatus, request) {
+        loadContent(firstUrl, function (request) {
             console.log("VisualCompare: Got second set of content");
-            var originalContentType = request.getResponseHeader('content-type');
+            var content2 = request.response;
+            var contentLength2 = 0;
             if (request.getResponseHeader('content-type').match("text/html") == null) {
                 contentLength2 = request.getResponseHeader('content-length');
             }
-            if (contentLength1 > 0 && contentLength2 > 0 && contentLength1 != contentLength2) {
-                $("#draftThumbnail-spinner").hide();
-                $(".binary-files-differ").show();
 
-            } else {
-                var postData = "version1=" + window.btoa(encodeURIComponent(data)) + "&version2=" + window.btoa(encodeURIComponent(data2)) + "&originalcontenttype=" + encodeURIComponent(originalContentType);
-                $.post(compareUrl,
-                    postData,
-                    function(data3) {
-                        console.log("VisualCompare: Showing diff version");
-                        document.write(data3);
-                    });
+            if (contentLength1 > 0 && contentLength2 > 0 && contentLength1 != contentLength2) {
+                showMessage("Files are different");
+            }
+            else {
+                compare(content1, content2, originalContentType);
             }
         });
     });
-
-});
-
     </script>
 </body>
 </html>

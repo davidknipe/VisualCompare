@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using System.Web;
 using EPiServer.Logging;
 using VisualCompareMode.Models;
 using EPiServer.Shell;
@@ -52,8 +51,8 @@ namespace VisualCompareMode.Controllers
 #endif
         public string Index(string version1, string version2, string originalcontenttype)
         {
-            version1 = HttpUtility.UrlDecode(Encoding.UTF8.GetString(Convert.FromBase64String(version1)));
-            version2 = HttpUtility.UrlDecode(Encoding.UTF8.GetString(Convert.FromBase64String(version2)));
+            version1 = Encoding.UTF8.GetString(Convert.FromBase64String(version1));
+            version2 = Encoding.UTF8.GetString(Convert.FromBase64String(version2));
 
             HtmlDiff.HtmlDiff diffHelper = new HtmlDiff.HtmlDiff(version1, version2);
             var diffResult = diffHelper.Build();
