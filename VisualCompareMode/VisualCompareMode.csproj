@@ -9,7 +9,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Visual red/green comparison mode for Episerver</Title>
-    <Version>1.2.0</Version>
+    <Version>1.2.1-pre003</Version>
     <Copyright>Copyright © 2024</Copyright>
     <Authors>David Knipe, Matthew Jimenez</Authors>
     <Description>Add a visual comparison for content</Description>

@@ -139,8 +139,11 @@
             }
         };
 
-        var postData = "version1=" + encodeURIComponent(window.btoa(content1)) +
-            "&version2=" + encodeURIComponent(window.btoa(content2)) +
+        var version1 = window.btoa(encodeURIComponent(content1));
+        var version2 = window.btoa(encodeURIComponent(content2));
+
+        var postData = "version1=" + encodeURIComponent(version1) +
+            "&version2=" + encodeURIComponent(version2) +
             "&originalcontenttype=" + encodeURIComponent(originalContentType);
         request.send(postData);
     }
