@@ -35,7 +35,7 @@ namespace VisualCompareMode.Controllers
                 {
                     FirstUrl = _urlResolver.GetUrl(first, firstlang, virtualPathArguments),
                     SecondUrl = _urlResolver.GetUrl(second, secondlang, virtualPathArguments),
-                    CompareUrl = Url.Action("Index", "VisualCompare", RouteData),
+                    CompareUrl = Url.Action("Index", "VisualCompare", new { area = RouteData.Values["area"] }),
                 };
                 return PartialView("~/modules/_protected/VisualCompareMode/Views/GetDiffBootstrapper.cshtml", model);
             }
