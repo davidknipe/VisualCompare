@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFrameworks>net461;net6.0</TargetFrameworks>
     <OutputType>Library</OutputType>
@@ -9,7 +9,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Visual red/green comparison mode for Episerver</Title>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <Copyright>Copyright © 2024</Copyright>
     <Authors>David Knipe, Matthew Jimenez</Authors>
     <Description>Add a visual comparison for content</Description>
@@ -21,17 +21,27 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageIconUrl>https://www.david-tec.com/global/media/visualcomparemode/visualcompareicon.png?v=1.0.0</PackageIconUrl>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
+    <EnableDefaultRazorGenerateItems>false</EnableDefaultRazorGenerateItems>
+  </PropertyGroup>
+  <Target Name="CreateModuleArchive" AfterTargets="Build;Rebuild">
+    <ZipDirectory SourceDirectory="modules\_protected\VisualCompareMode" DestinationFile="$(OutputPath)\VisualCompareMode.zip" Overwrite="true" />
+  </Target>
   <ItemGroup>
-    <Content Include="modules\**\*" Exclude="modules\**\Web.config">
-      <Pack>true</Pack>
-      <PackagePath>contentFiles\any\any\modules</PackagePath>
-      <BuildAction>None</BuildAction>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-    </Content>
+    <Content Remove="modules\**\*" />
     <Content Include="modules\**\*">
       <Pack>true</Pack>
       <PackagePath>content\modules</PackagePath>
+      <BuildAction>None</BuildAction>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="$(OutputPath)\VisualCompareMode.zip">
+      <Pack>true</Pack>
+      <PackagePath>contentFiles\any\any\modules\_protected\VisualCompareMode</PackagePath>
+      <BuildAction>None</BuildAction>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="VisualCompareMode.targets">
       <Pack>true</Pack>
